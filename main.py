@@ -2,11 +2,26 @@ from typing import Union
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
 from fastapi.openapi.docs import get_swagger_ui_html
+from fastapi.middleware.cors import CORSMiddleware
 
 from Registration import registration_router
 from AlYear import year_of_al
 
 app = FastAPI()
+
+# Set up CORS
+origins = [
+    "http://localhost:8080",  # Add the origins (Vue.js app URL) from where requests are allowed
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(registration_router)
 app.include_router(year_of_al)
 
