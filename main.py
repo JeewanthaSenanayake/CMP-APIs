@@ -4,9 +4,11 @@ from fastapi.openapi.utils import get_openapi
 from fastapi.openapi.docs import get_swagger_ui_html
 
 from Registration import registration_router
+from AlYear import year_of_al
 
 app = FastAPI()
 app.include_router(registration_router)
+app.include_router(year_of_al)
 
 @app.get("/")
 def read_root():

@@ -6,3 +6,5 @@ db = firebaseCon.get_firestore_client()
 def setData():
     doc_ref = db.collection('collection_name').document('document_id')
     doc_ref.set({'field1': 'dfd', 'field2': 'value2','field3': 'value3'})
+
+    
