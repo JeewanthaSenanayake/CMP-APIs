@@ -15,3 +15,7 @@ def getRegistrationNum(year):
     count = {"count":data['count']+1}
     doc_ref.update(count)
     return reg
+
+def createAccount(regiNum:str,data:dict):
+    doc_ref = db.collection('Users').document(str(regiNum))
+    doc_ref.set({"data":data})

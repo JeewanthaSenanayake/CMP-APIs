@@ -13,9 +13,10 @@ def getUser():
     registration.setData()
     return {"message": "This is getUser"}
 
-@registration_router.put("/createUser")
-def createUser():
-    return {"message": "This is getUser"}
+@registration_router.post("/createUser")
+def createUser(regiNum:str,data:dict):
+    registration.createAccount(regiNum,data)
+    return {"message": "Success"}
 
 @registration_router.delete("/deleteUser")
 def deleteUser():
