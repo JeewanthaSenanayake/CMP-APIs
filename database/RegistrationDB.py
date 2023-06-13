@@ -2,10 +2,20 @@ import database.firebase as firebaseCon
 
 db = firebaseCon.get_firestore_client()
 
-# Use db to interact with Firestore
-def setData():
-    doc_ref = db.collection('collection_name').document('document_id')
-    doc_ref.set({'field1': 'dfd', 'field2': 'value2','field3': 'value3'})
+def getUser(regiNo):
+    doc_ref = db.collection('Users')
+    all_docs = doc_ref.get()
+
+    userData = 'no user found'
+
+    for doc in all_docs:
+        if doc.to_dict()['data']['regiNo'] == regiNo:
+            userData = doc.to_dict()
+            break
+    
+    return userData
+
+        
 
     
 def getRegistrationNum(year):

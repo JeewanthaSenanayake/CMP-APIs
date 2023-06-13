@@ -9,9 +9,9 @@ def getRegiNum(year:str):
     return {"message": data}
 
 @registration_router.get("/getUser")
-def getUser():
-    registration.setData()
-    return {"message": "This is getUser"}
+def getUser(regiNum:str):
+    data = registration.getUser(regiNum)
+    return {"message": data}
 
 @registration_router.post("/createUser")
 def createUser(regiNum:str,data:dict):
