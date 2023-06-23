@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from Registration import registration_router
 from AlYear import year_of_al
+from Allclass import class_router  
 
 app = FastAPI()
 
@@ -25,6 +26,7 @@ app.add_middleware(
 
 app.include_router(registration_router)
 app.include_router(year_of_al)
+app.include_router(class_router)
 
 @app.get("/")
 def read_root():
