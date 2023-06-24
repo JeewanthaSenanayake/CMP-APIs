@@ -2,6 +2,22 @@ import database.firebase as firebaseCon
 
 db = firebaseCon.get_firestore_client()
 
+def setClassData(classType:str, classId:int, data:dict):
+    colname = classType + 'Class'
+    doc = 'class'+str(classId)
+    doc_ref = db.collection(colname).document(doc)
+    try:
+        day = doc_ref.get().to_dict()
+        data["day"] = day['day']
+        data['classId'] = classId
+        newData = {str(day['day']):data, 'day':day['day']+1}
+        doc_ref.update(newData)
+    except:
+        print("Creating new document")
+        data["day"] = 0
+        data['classId'] = classId
+        doc_ref.set({"0":data, 'day':1})
+
 def createClass(classType:str,data:dict):
     doc_ref = db.collection('cmp').document(classType)
     
