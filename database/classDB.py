@@ -7,10 +7,14 @@ def createClass(classType:str,data:dict):
     
     try:
         count = doc_ref.get().to_dict()
+        data["id"] = count['count']
+        data["regiStudents"]=[]
         newData = {str(count['count']):data, 'count':count['count']+1}
         doc_ref.update(newData)
     except:
         print("Creating new document")
+        data["id"] = 0
+        data["regiStudents"]=[]
         doc_ref.set({"0":data, 'count':1})
 
 def getAllClass(classType:str):
