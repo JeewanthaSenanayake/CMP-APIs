@@ -2,6 +2,22 @@ import database.firebase as firebaseCon
 
 db = firebaseCon.get_firestore_client()
 
+def registerForClass(classType:str, classId:int, studentId:str):
+    doc_ref = db.collection('cmp').document(classType)
+    try:
+        classData = doc_ref.get().to_dict()
+        data = classData[str(classId)]
+        regiList = data['regiStudents']
+        regiSet = set(regiList)
+        regiSet.add(studentId)
+        newData= {str(classId):{"regiStudents":list(regiSet)}}
+        doc_ref.update(newData)
+        return "Success"
+    except:
+        print("Creating new document")
+        return "Error"
+        
+
 def setClassData(classType:str, classId:int, data:dict):
     colname = classType + 'Class'
     doc = 'class'+str(classId)
