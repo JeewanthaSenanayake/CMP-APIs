@@ -18,7 +18,7 @@ def setClassData(classType:str , classId:int, data:dict):
     data = registration.setClassData(classType, classId, data)
     return {"message": data}
 
-@class_router.get("/registerForClass")
+@class_router.put("/registerForClass")
 def registerForClass(classType:str , classId:int, studentId:str):
     registration.registerForClass(classType, classId, studentId)
     return {"message": "Success"}
