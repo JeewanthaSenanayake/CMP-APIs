@@ -10,7 +10,8 @@ def registerForClass(classType:str, classId:int, studentId:str):
         regiList = data['regiStudents']
         regiSet = set(regiList)
         regiSet.add(studentId)
-        newData= {str(classId):{"regiStudents":list(regiSet)}}
+        data['regiStudents']=list(regiSet)
+        newData= {str(classId):data}
         doc_ref.update(newData)
         return "Success"
     except:
