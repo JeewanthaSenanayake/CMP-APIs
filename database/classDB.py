@@ -3,6 +3,35 @@ from datetime import date
 
 db = firebaseCon.get_firestore_client()
 
+def registeredClassData(classType: str, studentId: str):
+    today = date.today()
+    classYearMonuth = today.strftime("%Y-%B")
+    registerdClassList = []
+    doc_ref = db.collection('cmp').document(classType)
+    payment_ref = db.collection('payment').document(studentId)
+    payment = payment_ref.get().to_dict()
+    data = doc_ref.get().to_dict()
+    dataList = []
+    for i in range(0, int(data['count'])):
+        if studentId in data[str(i)]['regiStudents']:
+            dataList.append(data[str(i)])
+    
+    for classData in dataList:
+        classId = classData['id']
+        try:
+            class_ref = db.collection(f'{classType}Class').document(f"class{classId}")
+            classDataSet = class_ref.get().to_dict()
+            TodayClassData = classDataSet[str(classDataSet['day']-1)]
+            paymentData = payment[classType][str(classId)][classYearMonuth]
+            if(paymentData == True):
+                TodayClassData['paymentDone'] = 1
+            else:
+                TodayClassData['paymentDone'] = 0
+            registerdClassList.append(TodayClassData)
+        except:
+            print("No Class Data")
+
+    return registerdClassList
 
 def registerForClass(classType: str, classId: int, studentId: str):
     doc_ref = db.collection('cmp').document(classType)
