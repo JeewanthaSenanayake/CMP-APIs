@@ -10,6 +10,7 @@ def getAllClassWithPaymentStatus(classType: str, studentId: str):
     docData = doc_ref.get().to_dict()
     payment_ref = db.collection('payment').document(studentId)
     try:
+        outPutData = []
         paymentData = payment_ref.get().to_dict()   
         for i in range(0, int(docData['count'])):
             docData[str(i)]["isRegistered"] = False
@@ -21,14 +22,17 @@ def getAllClassWithPaymentStatus(classType: str, studentId: str):
             # get registration status
             if studentId in docData[str(i)]['regiStudents']:
                 docData[str(i)]["isRegistered"] = True
-        return docData
+            outPutData.append(docData[str(i)])
+        return outPutData
     except:
+        outPutData = []
         for i in range(0, int(docData['count'])):
             docData[str(i)]["isRegistered"] = False
             docData[str(i)]["isPaymentDone"] = 0
             if studentId in docData[str(i)]['regiStudents']:
                 docData[str(i)]["isRegistered"] = True
-        return docData
+            outPutData.append(docData[str(i)])
+        return outPutData
 
 def registeredClassData(classType: str, studentId: str):
     today = date.today()
