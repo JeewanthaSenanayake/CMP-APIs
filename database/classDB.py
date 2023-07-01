@@ -15,14 +15,16 @@ def getAllClassWithPaymentStatus(classType: str, studentId: str):
         for i in range(0, int(docData['count'])):
             docData[str(i)]["isRegistered"] = False
             # get payment status
-            if(paymentData[classType][str(i)]!=None):
+            try:
                 docData[str(i)]["isPaymentDone"] = paymentData[classType][str(i)][classYearMonuth]
-            else:
+            except:
                 docData[str(i)]["isPaymentDone"] = 0
+            
             # get registration status
             if studentId in docData[str(i)]['regiStudents']:
                 docData[str(i)]["isRegistered"] = True
             outPutData.append(docData[str(i)])
+        print("try block payment")
         return outPutData
     except:
         outPutData = []
@@ -32,6 +34,7 @@ def getAllClassWithPaymentStatus(classType: str, studentId: str):
             if studentId in docData[str(i)]['regiStudents']:
                 docData[str(i)]["isRegistered"] = True
             outPutData.append(docData[str(i)])
+        print("except block payment")
         return outPutData
 
 def registeredClassData(classType: str, studentId: str):
