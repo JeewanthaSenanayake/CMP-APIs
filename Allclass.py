@@ -27,3 +27,8 @@ def registerForClass(classType:str , classId:int, studentId:str):
 def registeredClassData(classType:str , studentId:str):
     data = registration.registeredClassData(classType, studentId)
     return {"message": data}
+
+@class_router.get("/getAllClassWithPaymentStatus")
+def getAllClassWithPaymentStatus(classType:str , studentId:str):
+    data = registration.getAllClassWithPaymentStatus(classType, studentId)
+    return {"message": data}

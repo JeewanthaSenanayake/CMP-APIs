@@ -3,6 +3,33 @@ from datetime import date
 
 db = firebaseCon.get_firestore_client()
 
+def getAllClassWithPaymentStatus(classType: str, studentId: str):
+    today = date.today()
+    classYearMonuth = today.strftime("%Y-%B")
+    doc_ref = db.collection('cmp').document(classType)
+    docData = doc_ref.get().to_dict()
+    payment_ref = db.collection('payment').document(studentId)
+    try:
+        paymentData = payment_ref.get().to_dict()   
+        for i in range(0, int(docData['count'])):
+            docData[str(i)]["isRegistered"] = False
+            # get payment status
+            if(paymentData[classType][str(i)]!=None):
+                docData[str(i)]["isPaymentDone"] = paymentData[classType][str(i)][classYearMonuth]
+            else:
+                docData[str(i)]["isPaymentDone"] = 0
+            # get registration status
+            if studentId in docData[str(i)]['regiStudents']:
+                docData[str(i)]["isRegistered"] = True
+        return docData
+    except:
+        for i in range(0, int(docData['count'])):
+            docData[str(i)]["isRegistered"] = False
+            docData[str(i)]["isPaymentDone"] = 0
+            if studentId in docData[str(i)]['regiStudents']:
+                docData[str(i)]["isRegistered"] = True
+        return docData
+
 def registeredClassData(classType: str, studentId: str):
     today = date.today()
     classYearMonuth = today.strftime("%Y-%B")
@@ -23,10 +50,7 @@ def registeredClassData(classType: str, studentId: str):
             classDataSet = class_ref.get().to_dict()
             TodayClassData = classDataSet[str(classDataSet['day']-1)]
             paymentData = payment[classType][str(classId)][classYearMonuth]
-            if(paymentData == True):
-                TodayClassData['paymentDone'] = 1
-            else:
-                TodayClassData['paymentDone'] = 0
+            TodayClassData['paymentDone'] = paymentData 
             registerdClassList.append(TodayClassData)
         except:
             print("No Class Data")
