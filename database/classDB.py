@@ -54,18 +54,18 @@ def registerForClass(classType: str, classId: int, studentId: str):
             paymentData = payment_ref.get().to_dict()
             paymentData[classType][str(classId)] = {
 
-                f"{year}-January": False,
-                f"{year}-February": False,
-                f"{year}-March": False,
-                f"{year}-April": False,
-                f"{year}-May": False,
-                f"{year}-June": False,
-                f"{year}-July": False,
-                f"{year}-August": False,
-                f"{year}-September": False,
-                f"{year}-October": False,
-                f"{year}-November": False,
-                f"{year}-December": False
+                f"{year}-January": 0,
+                f"{year}-February": 0,
+                f"{year}-March": 0,
+                f"{year}-April": 0,
+                f"{year}-May": 0,
+                f"{year}-June": 0,
+                f"{year}-July": 0,
+                f"{year}-August": 0,
+                f"{year}-September": 0,
+                f"{year}-October": 0,
+                f"{year}-November": 0,
+                f"{year}-December": 0
 
             }
             payment_ref.update(paymentData)
@@ -74,18 +74,18 @@ def registerForClass(classType: str, classId: int, studentId: str):
             print("Creating new document 2")
             data = {
                 str(classId): {
-                    f"{year}-January": False,
-                    f"{year}-February": False,
-                    f"{year}-March": False,
-                    f"{year}-April": False,
-                    f"{year}-May": False,
-                    f"{year}-June": False,
-                    f"{year}-July": False,
-                    f"{year}-August": False,
-                    f"{year}-September": False,
-                    f"{year}-October": False,
-                    f"{year}-November": False,
-                    f"{year}-December": False
+                    f"{year}-January": 0,
+                    f"{year}-February": 0,
+                    f"{year}-March": 0,
+                    f"{year}-April": 0,
+                    f"{year}-May": 0,
+                    f"{year}-June": 0,
+                    f"{year}-July": 0,
+                    f"{year}-August": 0,
+                    f"{year}-September": 0,
+                    f"{year}-October": 0,
+                    f"{year}-November": 0,
+                    f"{year}-December": 0
                 }
             }
             payment_ref.set({classType: data})
